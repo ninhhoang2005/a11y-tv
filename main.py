@@ -1,81 +1,29 @@
 import wx
 import vlc
 import requests
-import json
+import sys
 import os
 import threading
 
 # --- Constants & Version ---
 VERSION = "1.0"
 APP_NAME = "a11y tv"
-DATA_URL_CHANNELS = "https://iptv-org.github.io/api/channels.json"
-DATA_URL_STREAMS = "https://iptv-org.github.io/api/streams.json"
+DATA_URL = "http://lc.ktgame207.com/a11y_tv_data/tv_channel.json"
 
 class DataManager:
     def __init__(self):
         self.channels = []
-        self.streams = {}
         self.filtered_channels = []
 
     def fetch_data(self, callback):
         def run():
             try:
-                r_channels = requests.get(DATA_URL_CHANNELS, timeout=10)
-                channels_data = r_channels.json()
-                r_streams = requests.get(DATA_URL_STREAMS, timeout=10)
-                streams_data = r_streams.json()
-                self.streams = {s['channel']: s['url'] for s in streams_data if s.get('channel')}
+                # Tải dữ liệu json trực tiếp từ link
+                r = requests.get(DATA_URL, timeout=15)
+                r.raise_for_status() # Bắn ra lỗi nếu mã HTTP không phải 200 (ví dụ 404, 500)
+                channels_data = r.json()
                 
-                vn_channels = []
-                world_channels = []
-                for c in channels_data:
-                    cid = c.get('id')
-                    if cid in self.streams:
-                        channel_info = {
-                            'id': cid,
-                            'name': c.get('name', 'Unknown'),
-                            'url': self.streams[cid],
-                            'country': c.get('country', '??'),
-                            'display_name': f"{c.get('name', 'Unknown')} [{c.get('country', '??')}]"
-                        }
-                        if c.get('country') == 'VN': vn_channels.append(channel_info)
-                        else: world_channels.append(channel_info)
-                
-                custom_vn_channels = [
-                    {'id': 'custom_vtv_can_tho', 'name': 'VTV Cần Thơ', 'url': 'https://live.fptplay53.net/fnxch2/vtvcantho_abr.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'VTV Cần Thơ [VN]'},
-                    {'id': 'custom_vtv1', 'name': 'VTV1', 'url': 'https://live.fptplay53.net/fnxch2/vtv1hd_abr.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'VTV1 [VN]'},
-                    {'id': 'custom_vtv5', 'name': 'VTV5', 'url': 'https://live.fptplay53.net/epzch2/vtv5hd_abr.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'VTV5 [VN]'},
-                    {'id': 'custom_vtv4', 'name': 'VTV4', 'url': 'https://live.fptplay53.net/fnxch2/vtv4hd_abr.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'VTV4 [VN]'},
-                    {'id': 'custom_gia_lai', 'name': 'Gia Lai', 'url': 'https://freem3u.xyz/api/live/play.m3u8?vid=55', 'country': 'VN', 'display_name': 'Gia Lai [VN]'},
-                    {'id': 'custom_hung_yen', 'name': 'Hưng Yên', 'url': 'https://live.fptplay53.net/fnxsd1/hungyen_2000.stream/chunklist.m3u8', 'country': 'VN', 'display_name': 'Hưng Yên [VN]'},
-                    {'id': 'custom_ninh_binh', 'name': 'Ninh Bình', 'url': 'https://live.fptplay53.net/fnxsd1/ninhbinh_hls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Ninh Bình [VN]'},
-                    {'id': 'custom_phu_tho', 'name': 'Phú Thọ', 'url': 'https://live.fptplay53.net/fnxsd1/phutho_hls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Phú Thọ [VN]'},
-                    {'id': 'custom_btv9', 'name': 'BTV9', 'url': 'https://live.fptplay53.net/fnxsd1/btv9_hls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'BTV9 [VN]'},
-                    {'id': 'custom_hanoi_cab', 'name': 'Hà Nội Cab', 'url': 'https://freem3u.xyz/api/live/play.m3u8?vid=32', 'country': 'VN', 'display_name': 'Hà Nội Cab [VN]'},
-                    {'id': 'custom_hai_phong', 'name': 'Hải Phòng', 'url': 'https://live.fptplay53.net/fnxsd1/haiphong_hls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Hải Phòng [VN]'},
-                    {'id': 'custom_khanh_hoa_1', 'name': 'Khánh Hòa 1', 'url': 'https://freem3u.xyz/api/live/play.m3u8?vid=76', 'country': 'VN', 'display_name': 'Khánh Hòa 1 [VN]'},
-                    {'id': 'custom_lai_chau', 'name': 'Lai Châu', 'url': 'https://live.fptplay53.net/fnxsd1/laichau_hls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Lai Châu [VN]'},
-                    {'id': 'custom_lam_dong_1', 'name': 'Lâm Đồng 1', 'url': 'https://live.fptplay53.net/epzsd1/lamdong_hls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Lâm Đồng 1 [VN]'},
-                    {'id': 'custom_lam_dong_2', 'name': 'Lâm Đồng 2', 'url': 'https://freem3u.xyz/api/live/play.m3u8?vid=45', 'country': 'VN', 'display_name': 'Lâm Đồng 2 [VN]'},
-                    {'id': 'custom_lang_son', 'name': 'Lạng Sơn', 'url': 'https://live.fptplay53.net/fnxsd1/langson_hls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Lạng Sơn [VN]'},
-                    {'id': 'custom_quang_ninh_1', 'name': 'Quảng Ninh 1', 'url': 'https://live.fptplay53.net/fnxsd1/quangninh1_hls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Quảng Ninh 1 [VN]'},
-                    {'id': 'custom_quang_ninh_3', 'name': 'Quảng Ninh 3', 'url': 'https://live.fptplay53.net/fnxsd1/quangninh3_hls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Quảng Ninh 3 [VN]'},
-                    {'id': 'custom_quang_tri', 'name': 'Quảng Trị', 'url': 'https://live.fptplay53.net/epzsd1/quangtri_hls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Quảng Trị [VN]'},
-                    {'id': 'custom_son_la', 'name': 'Sơn La', 'url': 'https://live.fptplay53.net/fnxsd1/sonla_hls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Sơn La [VN]'},
-                    {'id': 'custom_thanh_hoa', 'name': 'Thanh Hóa', 'url': 'https://live.fptplay53.net/fnxsd1/thanhhoa_hls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Thanh Hóa [VN]'},
-                    {'id': 'custom_tuyen_quang', 'name': 'Tuyên Quang', 'url': 'https://live.fptplay53.net/fnxsd1/tuyenquang_hls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Tuyên Quang [VN]'},
-                    {'id': 'custom_tay_ninh_1', 'name': 'Tây Ninh 1', 'url': 'https://freem3u.xyz/api/live/play.m3u8?vid=72', 'country': 'VN', 'display_name': 'Tây Ninh 1 [VN]'},
-                    {'id': 'custom_tay_ninh_2', 'name': 'Tây Ninh 2', 'url': 'https://liveh34.vtvprime.vn/hls/TAYNINHTV/03.m3u8', 'country': 'VN', 'display_name': 'Tây Ninh 2 [VN]'},
-                    {'id': 'custom_vinh_long_2', 'name': 'Vĩnh Long 2', 'url': 'https://live.fptplay53.net/epzhd2/vinhlong2_vhls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Vĩnh Long 2 [VN]'},
-                    {'id': 'custom_vinh_long_3', 'name': 'Vĩnh Long 3', 'url': 'https://live.fptplay53.net/epzhd2/vinhlong3_vhls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Vĩnh Long 3 [VN]'},
-                    {'id': 'custom_vinh_long_4', 'name': 'Vĩnh Long 4', 'url': 'https://live.fptplay53.net/epzhd2/vinhlong4hd_vhls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Vĩnh Long 4 [VN]'},
-                    {'id': 'custom_vinh_long_5', 'name': 'Vĩnh Long 5', 'url': 'https://freem3u.xyz/api/live/play.m3u8?vid=91', 'country': 'VN', 'display_name': 'Vĩnh Long 5 [VN]'},
-                    {'id': 'custom_dong_thap_2', 'name': 'Đồng Tháp 2', 'url': 'https://live.fptplay53.net/epzsd1/dongthaphd_vhls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'Đồng Tháp 2 [VN]'},
-                    {'id': 'custom_htv2', 'name': 'HTV2', 'url': 'https://live.fptplay53.net/epzhd1/htv2hd_vhls.smil/chunklist.m3u8', 'country': 'VN', 'display_name': 'HTV2 [VN]'}
-                ]
-                vn_channels = custom_vn_channels + vn_channels
-                
-                self.channels = vn_channels + world_channels
+                self.channels = channels_data
                 self.filtered_channels = self.channels
                 wx.CallAfter(callback, True)
             except Exception as e:
@@ -88,12 +36,12 @@ class DataManager:
             self.filtered_channels = self.channels
         else:
             q = query.lower()
-            self.filtered_channels = [c for c in self.channels if q in c['name'].lower() or q in c['country'].lower()]
+            self.filtered_channels = [c for c in self.channels if q in c.get('name', '').lower()]
         return self.filtered_channels
 
 class PlayerFrame(wx.Frame):
     def __init__(self, parent, channel):
-        super().__init__(parent, title=f"Đang phát: {channel['name']}", style=wx.DEFAULT_FRAME_STYLE)
+        super().__init__(parent, title=f"Đang phát: {channel.get('name', 'Unknown')}", style=wx.DEFAULT_FRAME_STYLE)
         self.channel = channel
         self.SetBackgroundColour(wx.BLACK)
         
@@ -148,7 +96,8 @@ class PlayerFrame(wx.Frame):
         self.panel.SetSizer(ctrl_sizer)
 
     def play_stream(self):
-        Media = self.Instance.media_new(self.channel['url'])
+        url = self.channel.get('url', '')
+        Media = self.Instance.media_new(url)
         self.player.set_media(Media)
         if os.name == 'nt': self.player.set_hwnd(self.panel.GetHandle())
         else: self.player.set_xwindow(self.panel.GetHandle())
@@ -200,7 +149,7 @@ class MainFrame(wx.Frame):
         # Bắt phím Enter toàn cục cho Frame
         self.Bind(wx.EVT_CHAR_HOOK, self.on_char_hook)
         
-        self.status_bar.SetStatusText("Đang tải danh sách kênh...")
+        self.status_bar.SetStatusText("Đang kết nối tới đám mây để tải kênh...")
         self.data_mgr.fetch_data(self.on_data_loaded)
 
     def setup_ui(self):
@@ -208,7 +157,7 @@ class MainFrame(wx.Frame):
         main_sizer = wx.BoxSizer(wx.VERTICAL)
 
         self.search_ctrl = wx.SearchCtrl(panel, style=wx.TE_PROCESS_ENTER)
-        self.search_ctrl.SetDescriptiveText("Nhập tên kênh hoặc quốc gia...")
+        self.search_ctrl.SetDescriptiveText("Nhập tên kênh...")
         self.search_ctrl.Bind(wx.EVT_TEXT, self.on_search)
 
         self.list_box = wx.ListBox(panel, style=wx.LB_SINGLE | wx.LB_NEEDED_SB)
@@ -217,7 +166,7 @@ class MainFrame(wx.Frame):
 
         self.status_bar = self.CreateStatusBar()
 
-        main_sizer.Add(wx.StaticText(panel, label="Tìm kiếm:"), 0, wx.ALL, 5)
+        main_sizer.Add(wx.StaticText(panel, label="Tìm kiếm kênh:"), 0, wx.ALL, 5)
         main_sizer.Add(self.search_ctrl, 0, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, 10)
         main_sizer.Add(wx.StaticText(panel, label="Danh sách kênh:"), 0, wx.LEFT | wx.RIGHT, 10)
         main_sizer.Add(self.list_box, 1, wx.EXPAND | wx.ALL, 10)
@@ -238,15 +187,18 @@ class MainFrame(wx.Frame):
     def on_data_loaded(self, success):
         if success:
             self.update_list()
-            self.status_bar.SetStatusText(f"Sẵn sàng. Đã tải {len(self.data_mgr.channels)} kênh.")
+            self.status_bar.SetStatusText(f"Sẵn sàng. Đã tải {len(self.data_mgr.channels)} kênh từ đám mây.")
             self.list_box.SetFocus()
         else:
-            self.status_bar.SetStatusText("Lỗi tải dữ liệu.")
+            self.status_bar.SetStatusText("Không thể kết nối đám mây.")
+            wx.MessageBox("Không thể tải kênh từ đám mây, vui lòng thử lại", "Lỗi Kết Nối", wx.OK | wx.ICON_ERROR)
+            self.Close()
+            sys.exit(1) # Đóng luôn phần mềm theo yêu cầu
 
     def update_list(self):
         self.list_box.Clear()
         for c in self.data_mgr.filtered_channels:
-            self.list_box.Append(c['display_name'])
+            self.list_box.Append(c.get('name', 'Unknown'))
         if self.list_box.GetCount() > 0:
             self.list_box.SetSelection(0)
 
