@@ -156,19 +156,23 @@ class MainFrame(wx.Frame):
         panel = wx.Panel(self)
         main_sizer = wx.BoxSizer(wx.VERTICAL)
 
-        self.search_ctrl = wx.SearchCtrl(panel, style=wx.TE_PROCESS_ENTER)
-        self.search_ctrl.SetDescriptiveText("Nhập tên kênh...")
+        search_lbl = wx.StaticText(panel, label="Nhập tên kênh để tìm kiếm:")
+        self.search_ctrl = wx.TextCtrl(panel, style=wx.TE_PROCESS_ENTER)
+        self.search_ctrl.SetHint("Nhập tên kênh để tìm kiếm...")
+        self.search_ctrl.SetName("Nhập tên kênh để tìm kiếm")
         self.search_ctrl.Bind(wx.EVT_TEXT, self.on_search)
 
+        list_lbl = wx.StaticText(panel, label="Danh sách kênh")
         self.list_box = wx.ListBox(panel, style=wx.LB_SINGLE | wx.LB_NEEDED_SB)
+        self.list_box.SetName("Danh sách kênh")
         self.list_box.Bind(wx.EVT_LISTBOX_DCLICK, lambda e: self.on_play_selected())
         self.list_box.Bind(wx.EVT_CONTEXT_MENU, self.on_context_menu)
 
         self.status_bar = self.CreateStatusBar()
 
-        main_sizer.Add(wx.StaticText(panel, label="Tìm kiếm kênh:"), 0, wx.ALL, 5)
+        main_sizer.Add(search_lbl, 0, wx.ALL, 5)
         main_sizer.Add(self.search_ctrl, 0, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, 10)
-        main_sizer.Add(wx.StaticText(panel, label="Danh sách kênh:"), 0, wx.LEFT | wx.RIGHT, 10)
+        main_sizer.Add(list_lbl, 0, wx.LEFT | wx.RIGHT, 10)
         main_sizer.Add(self.list_box, 1, wx.EXPAND | wx.ALL, 10)
         panel.SetSizer(main_sizer)
 

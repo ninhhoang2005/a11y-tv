@@ -47,8 +47,12 @@ class ManagerFrame(wx.Frame):
         panel = wx.Panel(self)
         main_sizer = wx.BoxSizer(wx.VERTICAL)
         
+        # Layout components creation
+        lbl_list = wx.StaticText(panel, label="Danh sách kênh đang có (Lưu ở máy cục bộ):")
+        
         # Danh sách kênh
         self.list_box = wx.ListBox(panel, style=wx.LB_SINGLE | wx.LB_NEEDED_SB)
+        self.list_box.SetName("Danh sách kênh đang có")
         self.update_listbox()
         
         # Buttons
@@ -69,7 +73,7 @@ class ManagerFrame(wx.Frame):
         btn_sizer.Add(self.btn_save_file, 0, wx.ALL, 5)
         
         # Layout
-        main_sizer.Add(wx.StaticText(panel, label="Danh sách kênh đang có (Lưu ở máy cục bộ):"), 0, wx.ALL, 5)
+        main_sizer.Add(lbl_list, 0, wx.ALL, 5)
         main_sizer.Add(self.list_box, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, 10)
         main_sizer.Add(btn_sizer, 0, wx.ALIGN_CENTER | wx.ALL, 10)
         
