@@ -162,5 +162,221 @@
   {
     "name": "SCTV3",
     "url": "https://liveh34.vtvprime.vn/hls/SCTV3/01.m3u8"
+  },
+  {
+    "name": "VTV2",
+    "url": "https://live.fptplay53.net/fnxch2/vtv2hd_abr.smil/chunklist.m3u8"
+  },
+  {
+    "name": "VTV3",
+    "url": "https://live.fptplay53.net/fnxch2/vtv3hd_abr.smil/chunklist.m3u8"
+  },
+  {
+    "name": "Quảng Ngãi",
+    "url": "https://live.fptplay53.net/epzsd1/quangngai_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "Thái Nguyên",
+    "url": "https://live.fptplay53.net/fnxsd1/thainguyen_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "Vĩnh Long 1",
+    "url": "https://live.fptplay53.net/epzch2/vinhlong1_abr.smil/chunklist.m3u8"
+  },
+  {
+    "name": "Điện Biên",
+    "url": "https://live.fptplay53.net/fnxsd1/dienbien_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "Đà Nẵng 1",
+    "url": "https://live.fptplay53.net/epzsd1/danang1_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "Đà Nẵng 2",
+    "url": "https://live.fptplay53.net/epzsd1/danang2_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "Đắk Lắk",
+    "url": "https://live.fptplay53.net/epzsd1/daklak_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "Đồng Nai 1",
+    "url": "https://live.fptplay53.net/epzsd1/dongnai1_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "Đồng Nai 2",
+    "url": "https://live.fptplay53.net/epzsd1/dongnai2_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "Đồng Tháp 1",
+    "url": "https://live.fptplay53.net/epzsd1/dongthap_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "An Ninh tv",
+    "url": "https://live.fptplay53.net/fnxhd2/anninhtv_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "Quốc Phòng Việt Nam",
+    "url": "https://live.fptplay53.net/fnxhd2/quocphongvnhd_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "VTV 5 tây nam bộ",
+    "url": "https://live.fptplay53.net/fnxhd1/vtv5tnb_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "VTV 5 tây nguyên",
+    "url": "https://live.fptplay53.net/fnxhd1/vtv5taynguyen_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "VTV7",
+    "url": "https://live.fptplay53.net/fnxhd1/vtv7hd_vhls.smil/chunklist_b5000000.m3u8"
+  },
+  {
+    "name": "htv key",
+    "url": "https://live.fptplay53.net/epzhd1/htv4_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "htv thể thao",
+    "url": "https://live.fptplay53.net/epzhd1/htvcthethao_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "htv1",
+    "url": "https://live.fptplay53.net/epzhd1/htv1_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "htv3",
+    "url": "https://live.fptplay53.net/epzhd1/htv3_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "htv4",
+    "url": "https://live.fptplay53.net/epzhd1/htv4_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "htv7",
+    "url": "https://live.fptplay53.net/epzch2/htv7hd_abr.smil/chunklist.m3u8"
+  },
+  {
+    "name": "htv9",
+    "url": "https://live.fptplay53.net/epzhd1/htv9hd_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "htvc ca nhạc",
+    "url": "https://live.fptplay53.net/epzhd1/htvcmusic_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "htvc du lịch",
+    "url": "https://live.fptplay53.net/epzhd1/htvcdulich_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "htvc gia đình",
+    "url": "https://live.fptplay53.net/epzhd1/htvcgiadinh_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "htvc phim",
+    "url": "https://live.fptplay53.net/epzhd1/htvcmovieshd_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "htvc phụ nữ",
+    "url": "https://live.fptplay53.net/epzhd1/htvcphunu_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "htvc cộng",
+    "url": "https://live.fptplay53.net/epzhd1/htvcplus_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "htvc thuần việt",
+    "url": "https://live.fptplay53.net/epzhd1/htvcthuanviethd_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "sctv phim tổng hợp",
+    "url": "https://liveh12.vtvprime.vn/hls/SCTVPHIM/03.m3u8"
+  },
+  {
+    "name": "sctv1",
+    "url": "https://liveh12.vtvprime.vn/hls/SCTV1/index.m3u8"
+  },
+  {
+    "name": "sctv2",
+    "url": "https://freem3u.xyz/api/live/play.m3u8?vid=201"
+  },
+  {
+    "name": "sctv3",
+    "url": "https://liveh34.vtvprime.vn/hls/SCTV3/01.m3u8"
+  },
+  {
+    "name": "sctv4",
+    "url": "https://liveh12.vtvprime.vn/hls/SCTV4/03.m3u8"
+  },
+  {
+    "name": "sctv6",
+    "url": "https://live.fptplay53.net/epzhd2/film360_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "sctv5",
+    "url": "https://liveh34.vtvprime.vn/hls/SCTV7/01.m3u8"
+  },
+  {
+    "name": "sctv8",
+    "url": "https://liveh34.vtvprime.vn/hls/SCTV8/01.m3u8"
+  },
+  {
+    "name": "an giang1",
+    "url": "https://freem3u.xyz/api/live/play.m3u8?vid=66"
+  },
+  {
+    "name": "an giang2",
+    "url": "https://live.fptplay53.net/epzsd1/angiang_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "bắc ninh",
+    "url": "https://freem3u.xyz/api/live/play.m3u8?vid=39"
+  },
+  {
+    "name": "cao bằng",
+    "url": "https://live.fptplay53.net/fnxsd1/caobang_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "cà mau",
+    "url": "https://live.fptplay53.net/epzsd1/camau_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "cần thơ",
+    "url": "https://live.fptplay53.net/epzsd1/cantho_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "cần thơ1",
+    "url": "https://freem3u.xyz/api/live/play.m3u8?vid=84"
+  },
+  {
+    "name": "huế",
+    "url": "https://live.fptplay53.net/epzsd1/hue_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "hà nội1",
+    "url": "https://live.fptplay53.net/fnxhd2/hanoitv1_vhls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "hà nội2",
+    "url": "https://freem3u.xyz/api/live/play.m3u8?vid=34"
+  },
+  {
+    "name": "hà tĩnh",
+    "url": "https://live.fptplay53.net/fnxsd1/hatinh_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "hải phòng1",
+    "url": "https://freem3u.xyz/api/live/play.m3u8?vid=59"
+  },
+  {
+    "name": "khánh hòa",
+    "url": "https://live.fptplay53.net/epzsd1/khanhhoa_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "lào cai",
+    "url": "https://live.fptplay53.net/fnxsd1/laocai_hls.smil/chunklist.m3u8"
+  },
+  {
+    "name": "nghệ an",
+    "url": "https://live.fptplay53.net/fnxsd1/nghean_hls.smil/chunklist.m3u8"
   }
 ]
